@@ -200,7 +200,7 @@ namespace Requester
                 {
                     if(listBoxFiles.SelectedItem.ToString().Contains(file.FileName))
                     {
-                        Clipboard.SetText(string.Format("\"Name\":\"{0}\",\n \"Type\":\"{1}\",\n \"URL\":\"{2}\",\n \"Size\":{3}\n", file.FileName, file.MimeType, file.Url, file.Size));
+                        Clipboard.SetText(string.Format("\"FileName\":\"{0}\",\n\"Url\":\"{2}\",\n\"Size\":{3},\n\"MimeType\":\"{1}\"", file.FileName, file.MimeType, file.Url, file.Size));
                         lblEventStatus.Content = string.Format("\"{0}\" filedata was copied", file.FileName);
                         lblEventStatus.Foreground = Brushes.LimeGreen;
                         break;

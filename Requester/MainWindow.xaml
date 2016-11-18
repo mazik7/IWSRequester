@@ -9,13 +9,13 @@
     <Grid>
         <Button x:Name="btnLaunch" Content="Заебись" HorizontalAlignment="Right" Margin="0,289,10,0" VerticalAlignment="Top" Width="75" Click="btnLaunch_Click" HorizontalContentAlignment="Left" Grid.Column="1" Height="20"/>
         <TextBox x:Name="textBoxRequest" Height="23" Margin="10,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="497" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
-        <TextBox x:Name="textBoxResponce" Height="237" Margin="162,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="345" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left"/>
-        <ListBox x:Name="listBoxMethod" HorizontalAlignment="Left" Height="67" Margin="20,47,0,0" VerticalAlignment="Top" Width="57" ScrollViewer.CanContentScroll="True" SelectionChanged="listBoxMethod_SelectionChanged" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" SelectedIndex="1" UseLayoutRounding="True">
+        <TextBox x:Name="textBoxResponce" Height="237" Margin="162,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="345" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left" AcceptsReturn="True"/>
+        <ListBox x:Name="listBoxMethod" HorizontalAlignment="Left" Height="67" Margin="20,47,0,0" VerticalAlignment="Top" Width="57" ScrollViewer.CanContentScroll="True" SelectionChanged="listBoxMethod_SelectionChanged" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" SelectedIndex="0" UseLayoutRounding="True">
             <ListBoxItem Cursor="Hand" Content="GET"/>
             <ListBoxItem Cursor="Hand" Content="POST"/>
             <ListBoxItem Cursor="Hand" Content="PUT"/>
         </ListBox>
-        <TextBox x:Name="textBoxBody" Height="265" Margin="512,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="365" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left" IsEnabled="False"/>
+        <TextBox x:Name="textBoxBody" Height="265" Margin="512,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="365" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left" IsEnabled="False" AcceptsReturn="True"/>
         <Button x:Name="btnOpenFile" Content="Open File" HorizontalAlignment="Left" Margin="82,49,0,0" VerticalAlignment="Top" Width="75" Click="btnOpenFile_Click" Height="20"/>
         <Button x:Name="btnUploadFile" Content="Upload File" HorizontalAlignment="Left" Margin="82,83,0,0" VerticalAlignment="Top" Width="75" Click="btnUploadFile_Click" Height="20"/>
         <ListBox x:Name="listBoxFiles" HorizontalAlignment="Left" Height="165" Margin="20,119,0,0" VerticalAlignment="Top" Width="137" MouseDoubleClick="listBoxFiles_MouseDoubleClick" KeyDown="listBoxFiles_KeyDown"/>
