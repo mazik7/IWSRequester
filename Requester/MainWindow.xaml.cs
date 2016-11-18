@@ -35,58 +35,76 @@ namespace Requester
 
         private void btnLaunch_Click(object sender, RoutedEventArgs ea)
         {
-            var request = (HttpWebRequest)WebRequest.Create("http://inworkspace.biz/api/"+textBoxRequest.Text);
-            request.Method = _methodValue;
-            request.Headers.Add("oauth_token", "70c431c2-89cc-41ea-9a1e-f4aa5af9624a");
-            request.ContentType = "application/octet-stream";
-
-            byte[] content = Encoding.UTF8.GetBytes(textBoxBody.Text);
-            request.ContentLength = content.Length;
-
-            using (Stream dataStream = request.GetRequestStream())
-            using (MemoryStream memoryStream = new MemoryStream(content))
+            if (textBoxBody.Text.Contains("app")&& textBoxBody.Text.Contains("items") && _methodValue == "PUT")
             {
-                memoryStream.CopyTo(dataStream);
-                dataStream.Close();
-            }
-            
-            string result;
-            try
-            {
-                using (var reader = new StreamReader(request.GetResponse().GetResponseStream()))
+                var request = (HttpWebRequest)WebRequest.Create("http://inworkspace.biz/api/" + textBoxRequest.Text);
+                request.Method = _methodValue;
+                request.Headers.Add("oauth_token", "70c431c2-89cc-41ea-9a1e-f4aa5af9624a");
+                request.ContentType = "application/octet-stream";
+
+                byte[] content = Encoding.UTF8.GetBytes(textBoxBody.Text);
+                request.ContentLength = content.Length;
+
+                using (Stream dataStream = request.GetRequestStream())
+                using (MemoryStream memoryStream = new MemoryStream(content))
                 {
-                    result = reader.ReadToEnd();
+                    memoryStream.CopyTo(dataStream);
+                    dataStream.Close();
+                }
+
+                string result;
+                try
+                {
+                    using (var reader = new StreamReader(request.GetResponse().GetResponseStream()))
+                    {
+                        result = reader.ReadToEnd();
+                    }
+                }
+                catch (SocketException e)
+                {
+                    result = e.Message;
+                }
+                catch (WebException e)
+                {
+                    result = e.Message;
+                }
+                catch (Exception e)
+                {
+                    result = e.Message;
                 }
             }
-            catch (SocketException e)
-            {
-                result = e.Message;
+            else {
+                var client = new RestClient("http://inworkspace.biz/api");
+                var request = new RestRequest(textBoxRequest.Text);
+                switch (_methodValue)
+                {
+                    case "GET":
+                        {
+                            request.Method = Method.GET;
+                        }
+                        break;
+                    case "POST":
+                        {
+                            request.Method = Method.POST;
+                        }
+                        break;
+                    case "PUT":
+                        {
+                            request.Method = Method.PUT;
+                        }
+                        break;
+                }
+                request.AddHeader("oauth_token", "70c431c2-89cc-41ea-9a1e-f4aa5af9624a");
+                request.RequestFormat = RestSharp.DataFormat.Json;
+                if (textBoxBody.IsEnabled && textBoxBody.Text.Length > 0)
+                {
+                    request.AddParameter("application/json", textBoxBody.Text, ParameterType.RequestBody);
+                }
+                IRestResponse responce;
+                responce = client.Execute(request);
+                textBoxResponce.Text = responce.StatusCode.ToString() + "\r\n";
+                textBoxResponce.Text += responce.Content.ToString();
             }
-            catch (WebException e)
-            {
-                result = e.Message;
-            }
-            catch (Exception e)
-            {
-                result = e.Message;
-            }
-            /*
-            var client = new RestClient("http://inworkspace.biz/api");
-            var request = new RestRequest(textBoxRequest.Text, methodValue);
-            request.AddHeader("oauth_token", "70c431c2-89cc-41ea-9a1e-f4aa5af9624a");
-            if(methodValue != Method.PUT)
-                request.AddHeader("Content-Type", "application/json");
-            else
-                request.AddHeader("Content-Type", "application/octet-stream");
-            request.RequestFormat = RestSharp.DataFormat.Json;
-            if (textBoxBody.IsEnabled && textBoxBody.Text.Length > 0)
-            {
-                request.AddParameter("application/json", textBoxBody.Text, ParameterType.RequestBody);
-            }
-            IRestResponse responce;
-            responce = client.Execute(request);
-            textBoxResponce.Text = responce.StatusCode.ToString()+"\r\n";
-            textBoxResponce.Text += responce.Content.ToString();*/
         }
 
         private void listBoxMethod_SelectionChanged(object sender, SelectionChangedEventArgs e)
