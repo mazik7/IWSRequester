@@ -102,8 +102,9 @@ namespace Requester
                 }
                 IRestResponse responce;
                 responce = client.Execute(request);
-                textBoxResponce.Text = responce.StatusCode.ToString() + "\r\n";
-                textBoxResponce.Text += responce.Content.ToString();
+                textBoxResponce.Text = responce.StatusCode + "\r\n";
+                textBoxResponce.Text += responce.StatusDescription + "\r\n";
+                textBoxResponce.Text += responce.Content;
             }
         }
 
@@ -172,8 +173,9 @@ namespace Requester
                 listBoxFiles.Items.Add(file.FileName);
                 File.WriteAllText("files.txt", SimpleJson.SerializeObject(_files));
             }
-            textBoxResponce.Text = responce.StatusCode.ToString() + "\r\n";
-            textBoxResponce.Text += responce.Content.ToString();
+            textBoxResponce.Text = responce.StatusCode+ "\r\n";
+            textBoxResponce.Text += responce.StatusDescription + "\r\n";
+            textBoxResponce.Text += responce.Content;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
