@@ -77,6 +77,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Config.cs" />
     <Compile Include="FileMetadata.cs" />
     <Compile Include="FileViewModel.cs" />
     <Compile Include="TempFile.cs" />

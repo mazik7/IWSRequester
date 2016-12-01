@@ -27,6 +27,7 @@ namespace Requester
         private string _jsonFiles;
         private string _methodValue;
         private TempFile _fileToUpload;
+        private Config _config;
         FileViewModelList _files = new FileViewModelList();
         public MainWindow()
         {
@@ -39,7 +40,8 @@ namespace Requester
             {
                 var request = (HttpWebRequest)WebRequest.Create("http://inworkspace.biz/api/" + textBoxRequest.Text);
                 request.Method = _methodValue;
-                request.Headers.Add("oauth_token", "70c431c2-89cc-41ea-9a1e-f4aa5af9624a");
+                //request.Headers.Add("oauth_token", "70762123-0dc5-4114-9066-516796255c4a");
+                request.Headers.Add("oauth_token", "75fffd1b-95eb-4a15-89bf-15266ea9017f");
                 request.ContentType = "application/octet-stream";
 
                 byte[] content = Encoding.UTF8.GetBytes(textBoxBody.Text);
@@ -94,7 +96,8 @@ namespace Requester
                         }
                         break;
                 }
-                request.AddHeader("oauth_token", "70c431c2-89cc-41ea-9a1e-f4aa5af9624a");
+                //request.AddHeader("oauth_token", "70762123-0dc5-4114-9066-516796255c4a");
+                request.AddHeader("oauth_token", "75fffd1b-95eb-4a15-89bf-15266ea9017f");
                 request.RequestFormat = RestSharp.DataFormat.Json;
                 if (textBoxBody.IsEnabled && textBoxBody.Text.Length > 0)
                 {
@@ -159,7 +162,8 @@ namespace Requester
         {
             var client = new RestClient("http://inworkspace.biz/api");
             var request = new RestRequest("/files/?storageType=Secured", Method.PUT);
-            request.AddHeader("oauth_token", "70c431c2-89cc-41ea-9a1e-f4aa5af9624a");
+            request.AddHeader("oauth_token", "70762123-0dc5-4114-9066-516796255c4a");
+            //request.AddHeader("oauth_token", "75fffd1b-95eb-4a15-89bf-15266ea9017f");
             request.AddHeader("Content-Type", "multipart/form-data");
             //request.AddParameter("multipart/form-data", fileToUpload.UploadBody, ParameterType.RequestBody);
             request.AlwaysMultipartFormData = true;
@@ -182,7 +186,8 @@ namespace Requester
         {
             if (!File.Exists("files.txt"))
                 File.Create("files.txt");
-            
+            if (!File.Exists("Config.txt"))
+                File.Create("Config.txt");
             _jsonFiles = File.ReadAllText("files.txt");
             if (_jsonFiles.Length > 0)
             {   
@@ -192,6 +197,9 @@ namespace Requester
                     listBoxFiles.Items.Add(file.FileName);
                 }
             }
+            _jsonFiles = File.ReadAllText("Config.txt");
+            if (_jsonFiles.Length > 0)
+                _config = SimpleJson.DeserializeObject<Config>(_jsonFiles);
         }
 
         private void listBoxFiles_MouseDoubleClick(object sender, MouseButtonEventArgs e)
