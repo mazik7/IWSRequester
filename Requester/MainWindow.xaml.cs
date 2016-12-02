@@ -27,7 +27,7 @@ namespace Requester
         private string _jsonFiles;
         private string _methodValue;
         private TempFile _fileToUpload;
-        private Config _config;
+        public Config _config;
         FileViewModelList _files = new FileViewModelList();
         public MainWindow()
         {
@@ -38,10 +38,9 @@ namespace Requester
         {
             if (textBoxBody.Text.Contains("app")&& textBoxBody.Text.Contains("items") && _methodValue == "PUT")
             {
-                var request = (HttpWebRequest)WebRequest.Create("http://inworkspace.biz/api/" + textBoxRequest.Text);
+                var request = (HttpWebRequest)WebRequest.Create(_config.BaseURL + textBoxRequest.Text);
                 request.Method = _methodValue;
-                //request.Headers.Add("oauth_token", "70762123-0dc5-4114-9066-516796255c4a");
-                request.Headers.Add("oauth_token", "75fffd1b-95eb-4a15-89bf-15266ea9017f");
+                request.Headers.Add("oauth_token", _config.Token);
                 request.ContentType = "application/octet-stream";
 
                 byte[] content = Encoding.UTF8.GetBytes(textBoxBody.Text);
@@ -76,7 +75,7 @@ namespace Requester
                 }
             }
             else {
-                var client = new RestClient("http://inworkspace.biz/api");
+                var client = new RestClient(_config.BaseURL);
                 var request = new RestRequest(textBoxRequest.Text);
                 switch (_methodValue)
                 {
@@ -96,8 +95,7 @@ namespace Requester
                         }
                         break;
                 }
-                //request.AddHeader("oauth_token", "70762123-0dc5-4114-9066-516796255c4a");
-                request.AddHeader("oauth_token", "75fffd1b-95eb-4a15-89bf-15266ea9017f");
+                request.AddHeader("oauth_token", _config.Token);
                 request.RequestFormat = RestSharp.DataFormat.Json;
                 if (textBoxBody.IsEnabled && textBoxBody.Text.Length > 0)
                 {
@@ -105,8 +103,12 @@ namespace Requester
                 }
                 IRestResponse responce;
                 responce = client.Execute(request);
-                textBoxResponce.Text = responce.StatusCode + "\r\n";
-                textBoxResponce.Text += responce.StatusDescription + "\r\n";
+                if(responce.StatusCode == HttpStatusCode.OK)
+                    lblEventStatus.Foreground = Brushes.LimeGreen;
+                else
+                    lblEventStatus.Foreground = Brushes.DarkRed;
+                lblEventStatus.Content = responce.StatusCode;
+                textBoxResponce.Text = responce.StatusDescription + "\r\n";
                 textBoxResponce.Text += responce.Content;
             }
         }
@@ -160,12 +162,10 @@ namespace Requester
 
         private void btnUploadFile_Click(object sender, RoutedEventArgs e)
         {
-            var client = new RestClient("http://inworkspace.biz/api");
+            var client = new RestClient(_config.BaseURL);
             var request = new RestRequest("/files/?storageType=Secured", Method.PUT);
-            request.AddHeader("oauth_token", "70762123-0dc5-4114-9066-516796255c4a");
-            //request.AddHeader("oauth_token", "75fffd1b-95eb-4a15-89bf-15266ea9017f");
+            request.AddHeader("oauth_token", _config.Token);
             request.AddHeader("Content-Type", "multipart/form-data");
-            //request.AddParameter("multipart/form-data", fileToUpload.UploadBody, ParameterType.RequestBody);
             request.AlwaysMultipartFormData = true;
             IRestResponse responce;
             request.AddFile("file1", _fileToUpload.LocalPath, _fileToUpload.MimeType);
@@ -199,7 +199,12 @@ namespace Requester
             }
             _jsonFiles = File.ReadAllText("Config.txt");
             if (_jsonFiles.Length > 0)
+            {
                 _config = SimpleJson.DeserializeObject<Config>(_jsonFiles);
+                SetConfig();
+            }
+            else
+                _config = new Config();
         }
 
         private void listBoxFiles_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -237,6 +242,49 @@ namespace Requester
                     File.WriteAllText("files.txt", SimpleJson.SerializeObject(_files));
                 }
             }
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            _config.Request = textBoxRequest.Text;
+            _config.Responce = textBoxResponce.Text;
+            _config.Body = textBoxBody.Text;
+            _config.Method = _methodValue;
+            if (rBtnBiz.IsChecked == true)
+                _config.IsBiz = true;
+            else
+                _config.IsBiz = false;
+            File.WriteAllText("Config.txt", SimpleJson.SerializeObject(_config));
+        }
+        private void SetConfig()
+        {
+            textBoxRequest.Text = _config.Request;
+            textBoxResponce.Text = _config.Responce;
+            textBoxBody.Text = _config.Body;
+            _methodValue = _config.Method;
+            if (_config.IsBiz)
+                rBtnBiz.IsChecked = true;
+            else
+                rBtnCom.IsChecked = true;
+        }
+
+        private void btnEditAuthData_Click(object sender, RoutedEventArgs e)
+        {
+            Window cfgWindow = new AuthInfo(_config);
+            cfgWindow.Owner = this;
+            cfgWindow.ShowDialog();
+        }
+
+        private void rBtnBiz_Checked(object sender, RoutedEventArgs e)
+        {
+            if(_config!=null)
+                _config.IsBiz = true;
+        }
+
+        private void rBtnCom_Checked(object sender, RoutedEventArgs e)
+        {
+            if (_config != null)
+                _config.IsBiz = false;
         }
     }
 }

@@ -77,10 +77,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AuthInfo.xaml.cs">
+      <DependentUpon>AuthInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Config.cs" />
     <Compile Include="FileMetadata.cs" />
     <Compile Include="FileViewModel.cs" />
     <Compile Include="TempFile.cs" />
+    <Page Include="AuthInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
