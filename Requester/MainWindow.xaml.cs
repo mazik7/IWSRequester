@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using RestSharp;
+using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using System.Net;
 using System.Net.Sockets;
@@ -24,6 +25,8 @@ namespace Requester
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Collection<Test> _tests = new Collection<Test>();
+        private RestClient _testsClient = new RestClient();
         private string _jsonFiles;
         private string _methodValue;
         private TempFile _fileToUpload;
@@ -32,6 +35,27 @@ namespace Requester
         public MainWindow()
         {
             InitializeComponent();
+        }
+        private void TestInit()
+        {
+            _testsClient.BaseUrl = new Uri(_config.BaseURL);
+            var request = new RestRequest();
+            request.Method = Method.GET;
+            request.AddHeader("oauth_token", _config.Token);
+            request.RequestFormat = RestSharp.DataFormat.Json;
+            request.Resource = "/app/trainings/";
+            _tests.Add(new Test(_testsClient, new RestRequest("/app/trainings/", Method.GET), "Информация о приложении", "Проверка на отработку запроса \"/app/appKey/\", а так же проверка наличия тестового приложения"));
+            _tests.Add(new Test(_testsClient, new RestRequest("/app/trainings/fields/", Method.GET), "Получение полей приложения", "Проверка на отработку запроса \"/app/appKey/fields/\""));
+            _tests.Add(new Test(_testsClient, new RestRequest("/app/trainings/items/", Method.GET), "Получение элементов приложения", "Проверка на отработку запроса \"/app/appKey/items/\""));
+
+            ListBoxItem item = new ListBoxItem();
+            foreach (Test test in _tests)
+            {
+                item = new ListBoxItem();
+                item.Content = test.Name;
+                item.ToolTip = test.Description;
+                listBoxTests.Items.Add(item);
+            }
         }
 
         private void btnLaunch_Click(object sender, RoutedEventArgs ea)
@@ -205,6 +229,7 @@ namespace Requester
             }
             else
                 _config = new Config();
+            TestInit();
         }
 
         private void listBoxFiles_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -277,14 +302,28 @@ namespace Requester
 
         private void rBtnBiz_Checked(object sender, RoutedEventArgs e)
         {
-            if(_config!=null)
+            if (_config != null)
+            {
                 _config.IsBiz = true;
+                _testsClient.BaseUrl = new Uri(_config.BaseURL);
+            }
         }
 
         private void rBtnCom_Checked(object sender, RoutedEventArgs e)
         {
             if (_config != null)
+            {
                 _config.IsBiz = false;
+                _testsClient.BaseUrl = new Uri(_config.BaseURL);
+            }
+        }
+
+        private void listBoxTests_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            textBoxLog.Text += "Тест \"" + _tests[listBoxTests.SelectedIndex].Name + "\" пошел\n";
+            Result testResult = _tests[listBoxTests.SelectedIndex].Start(_config.Token);
+            textBoxLog.Text += "Статус "+ testResult.State + "\n";
+            //textBoxLog.Text += "Тело: \n" + testResult.Body + "\n";
         }
     }
 }
