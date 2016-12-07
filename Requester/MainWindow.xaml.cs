@@ -323,7 +323,10 @@ namespace Requester
                 textBoxLog.Text += "Тест \"" + _tests[listBoxTests.SelectedIndex].Name + "\" пошел\n";
                 Result testResult = _tests[listBoxTests.SelectedIndex].Start(_config.Token);
                 textBoxLog.Text += "Статус " + testResult.State + "\n";
-                //textBoxLog.Text += "Тело: \n" + testResult.Body + "\n";
+                if (testResult.Body != "")
+                    textBoxLog.Text += "Тело ответа: " + JsonHelper.FormatJson(testResult.Body) + "\n";
+                else
+                    textBoxLog.Text += "В теле ответа пришла пустота... \n";
             }
             else if (listBoxTests.SelectedItems.Count > 1)
             {
@@ -359,7 +362,7 @@ namespace Requester
                         textBoxLog.Text += "Код ответа: " + failedResult.State + "\n";
                         textBoxLog.Text += "Подробней: " + failedResult.Description + "\n";
                         if(failedResult.Body != "")
-                            textBoxLog.Text += "Тело ответа: " + failedResult.Body + "\n";
+                            textBoxLog.Text += "Тело ответа: " + JsonHelper.FormatJson(failedResult.Body) + "\n";
                         else
                             textBoxLog.Text += "В теле ответа пришла пустота... \n";
                     }
