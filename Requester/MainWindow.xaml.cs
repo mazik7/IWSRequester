@@ -39,11 +39,6 @@ namespace Requester
         private void TestInit()
         {
             _testsClient.BaseUrl = new Uri(_config.BaseURL);
-            var request = new RestRequest();
-            request.Method = Method.GET;
-            request.AddHeader("oauth_token", _config.Token);
-            request.RequestFormat = RestSharp.DataFormat.Json;
-            request.Resource = "/app/trainings/";
             _tests.Add(new Test(_testsClient, new RestRequest("/app/trainings/", Method.GET), "Информация о приложении", "Проверка на отработку запроса \"/app/appKey/\", а так же проверка наличия тестового приложения"));
             _tests.Add(new Test(_testsClient, new RestRequest("/app/trainings/fields/", Method.GET), "Получение полей приложения", "Проверка на отработку запроса \"/app/appKey/fields/\""));
             _tests.Add(new Test(_testsClient, new RestRequest("/app/trainings/items/", Method.GET), "Получение элементов приложения", "Проверка на отработку запроса \"/app/appKey/items/\""));
@@ -320,10 +315,56 @@ namespace Requester
 
         private void listBoxTests_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            textBoxLog.Text += "Тест \"" + _tests[listBoxTests.SelectedIndex].Name + "\" пошел\n";
-            Result testResult = _tests[listBoxTests.SelectedIndex].Start(_config.Token);
-            textBoxLog.Text += "Статус "+ testResult.State + "\n";
-            //textBoxLog.Text += "Тело: \n" + testResult.Body + "\n";
+            Collection<string> items = new Collection<string>();
+            Collection<Test> testsList = new Collection<Test>();
+            Collection<Result> testsResult;
+            if (listBoxTests.SelectedItems.Count == 1)
+            {
+                textBoxLog.Text += "Тест \"" + _tests[listBoxTests.SelectedIndex].Name + "\" пошел\n";
+                Result testResult = _tests[listBoxTests.SelectedIndex].Start(_config.Token);
+                textBoxLog.Text += "Статус " + testResult.State + "\n";
+                //textBoxLog.Text += "Тело: \n" + testResult.Body + "\n";
+            }
+            else if (listBoxTests.SelectedItems.Count > 1)
+            {
+                foreach (ListBoxItem item in listBoxTests.SelectedItems)
+                {
+                    items.Add(item.Content.ToString());
+                }
+                foreach(string item in items)
+                {
+                    foreach(Test test in _tests)
+                    {
+                        if(item.Contains(test.Name))
+                        {
+                            testsList.Add(test);
+                            break;
+                        }
+                    }
+                }
+                textBoxLog.Text += "Запускаем несколько тестов. Придется долго ждать пока я не закончу. Вахахах" + "\n";
+                TestSuite suite = new TestSuite(testsList);
+                testsResult = suite.Start(_config.Token);
+                textBoxLog.Text += "Информация о прошедших тестах..." + "\n";
+                textBoxLog.Text += "Всего тестов: "+ suite.TotalCount + "\n";
+                textBoxLog.Text += "Успешных: " + suite.PassedCount + "\n";
+                textBoxLog.Text += "Неудачников: " + suite.FailedCount + "\n";
+                if(testsResult!= null)
+                {
+                    textBoxLog.Text += "О неудачниках: " + "\n";
+                    foreach(Result failedResult in testsResult)
+                    {
+                        textBoxLog.Text += "-----------------------------------------------\n";
+                        textBoxLog.Text += "Запрос: " + failedResult.URL + "\n";
+                        textBoxLog.Text += "Код ответа: " + failedResult.State + "\n";
+                        textBoxLog.Text += "Подробней: " + failedResult.Description + "\n";
+                        if(failedResult.Body != "")
+                            textBoxLog.Text += "Тело ответа: " + failedResult.Body + "\n";
+                        else
+                            textBoxLog.Text += "В теле ответа пришла пустота... \n";
+                    }
+                }
+            }
         }
     }
 }

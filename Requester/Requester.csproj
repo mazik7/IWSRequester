@@ -86,6 +86,7 @@
     <Compile Include="Result.cs" />
     <Compile Include="TempFile.cs" />
     <Compile Include="Test.cs" />
+    <Compile Include="TestSuite.cs" />
     <Page Include="AuthInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
