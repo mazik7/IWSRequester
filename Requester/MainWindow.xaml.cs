@@ -128,7 +128,7 @@ namespace Requester
                     lblEventStatus.Foreground = Brushes.DarkRed;
                 lblEventStatus.Content = responce.StatusCode;
                 textBoxResponce.Text = responce.StatusDescription + "\r\n";
-                textBoxResponce.Text += responce.Content;
+                textBoxResponce.Text += JsonHelper.FormatJson(responce.Content);
             }
         }
 
@@ -198,7 +198,7 @@ namespace Requester
             }
             textBoxResponce.Text = responce.StatusCode+ "\r\n";
             textBoxResponce.Text += responce.StatusDescription + "\r\n";
-            textBoxResponce.Text += responce.Content;
+            textBoxResponce.Text += JsonHelper.FormatJson(responce.Content);
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

@@ -83,6 +83,7 @@
     <Compile Include="Config.cs" />
     <Compile Include="FileMetadata.cs" />
     <Compile Include="FileViewModel.cs" />
+    <Compile Include="JsonHelper.cs" />
     <Compile Include="Result.cs" />
     <Compile Include="TempFile.cs" />
     <Compile Include="Test.cs" />
