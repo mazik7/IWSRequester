@@ -9,13 +9,20 @@ namespace Requester
 {
     public class CurrentUser
     {
+        private string _url;
+        private string _token;
+        public CurrentUser(Config config)
+        {
+            _url = config.BaseURL;
+            _token = config.Token;
+        }
         public string UserName
         {
             get
             {
-                RestClient client = new RestClient(_config.BaseURL);
+                RestClient client = new RestClient(_url);
                 var request = new RestRequest("users/current");
-                request.AddHeader("oauth_token", _config.Token);
+                request.AddHeader("oauth_token", _token);
                 request.RequestFormat = RestSharp.DataFormat.Json;
                 IRestResponse responce = client.Execute(request);
                 //lblEventStatus.Content;

@@ -231,7 +231,7 @@ namespace Requester
             else
                 _config = new Config();
             TestInit();
-            
+            lblEventStatus.Content = new CurrentUser(_config).UserName;
         }
 
         private void listBoxFiles_MouseDoubleClick(object sender, MouseButtonEventArgs e)
