@@ -39,9 +39,15 @@ namespace Requester
         private void TestInit()
         {
             _testsClient.BaseUrl = new Uri(_config.BaseURL);
-            _tests.Add(new Test(_testsClient, new RestRequest("/app/trainings/", Method.GET), "Информация о приложении", "Проверка на отработку запроса \"/app/appKey/\", а так же проверка наличия тестового приложения"));
-            _tests.Add(new Test(_testsClient, new RestRequest("/app/trainings/fields/", Method.GET), "Получение полей приложения", "Проверка на отработку запроса \"/app/appKey/fields/\""));
-            _tests.Add(new Test(_testsClient, new RestRequest("/app/trainings/items/", Method.GET), "Получение элементов приложения", "Проверка на отработку запроса \"/app/appKey/items/\""));
+            _tests.Add(new Test(_testsClient, new RestRequest("/app/?organizationKey=techrunning&workspaceKey=skiing", Method.GET), "1.1 Спискок приложений в рабочей области", "Проверка на отработку запроса \"/app/?organizationKey={organizationKey}&workspaceKey={workspaceKey}\", \nа так же проверка наличия тестовой рабочей области"));
+            _tests.Add(new Test(_testsClient, new RestRequest("/app/trainings/", Method.GET), "1.2 Информация о приложении", "Проверка на отработку запроса \"/app/appKey/\", а так же проверка наличия тестового приложения"));
+            _tests.Add(new Test(_testsClient, new RestRequest("/app/trainings/fields/", Method.GET), "2.1 Список полей приложения", "Проверка на отработку запроса \"/app/appKey/fields/\""));
+            _tests.Add(new Test(_testsClient, new RestRequest("/app/trainings/items/", Method.GET), "3.1 Список элементов приложения", "Проверка на отработку запроса \"/app/appKey/items/\""));
+            _tests.Add(new Test(_testsClient, new RestRequest("/app/items/51761/", Method.GET), "3.1 Элемент приложения", "Проверка на отработку запроса \"/app/items/itemKey/\""));
+            _tests.Add(new Test(_testsClient, new RestRequest("/organizations/", Method.GET), "4.1 Список организаций", "Проверка на отработку запроса \"/organizations/\""));
+            _tests.Add(new Test(_testsClient, new RestRequest("/workspaces/?organizationKey=techrunning", Method.GET), "4.2 Список рабочих областей в организации", "Проверка на отработку запроса \"/workspaces/?organizationKey=orgKey/\""));
+            _tests.Add(new Test(_testsClient, new RestRequest("/comments/?targetType=ApplicationPartRecord&targetKey=51761", Method.GET), "4.3.1 Комментарии элемента приложения", "Проверка на отработку запроса \"/comments/?targetType=type&targetKey=key\" \n для типа \"ApplicationPartRecord\"(Элемент приложения)"));
+            _tests.Add(new Test(_testsClient, new RestRequest("/activities/?contextType=Workspace&contextKey=skiing", Method.GET), "4.5 Список активностей", "Проверка на отработку запроса \"/activities/?contextType=type&contextKey=key\" \n для типа \"Workspace\"(Рабочая область)"));
 
             ListBoxItem item = new ListBoxItem();
             foreach (Test test in _tests)
@@ -225,6 +231,7 @@ namespace Requester
             else
                 _config = new Config();
             TestInit();
+            
         }
 
         private void listBoxFiles_MouseDoubleClick(object sender, MouseButtonEventArgs e)

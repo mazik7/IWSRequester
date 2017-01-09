@@ -81,6 +81,7 @@
       <DependentUpon>AuthInfo.xaml</DependentUpon>
     </Compile>
     <Compile Include="Config.cs" />
+    <Compile Include="CurrentUser.cs" />
     <Compile Include="FileMetadata.cs" />
     <Compile Include="FileViewModel.cs" />
     <Compile Include="JsonHelper.cs" />
