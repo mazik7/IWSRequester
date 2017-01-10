@@ -47,7 +47,15 @@ namespace Requester
             _tests.Add(new Test(_testsClient, new RestRequest("/organizations/", Method.GET), "4.1 Список организаций", "Проверка на отработку запроса \"/organizations/\""));
             _tests.Add(new Test(_testsClient, new RestRequest("/workspaces/?organizationKey=techrunning", Method.GET), "4.2 Список рабочих областей в организации", "Проверка на отработку запроса \"/workspaces/?organizationKey=orgKey/\""));
             _tests.Add(new Test(_testsClient, new RestRequest("/comments/?targetType=ApplicationPartRecord&targetKey=51761", Method.GET), "4.3.1 Комментарии элемента приложения", "Проверка на отработку запроса \"/comments/?targetType=type&targetKey=key\" \n для типа \"ApplicationPartRecord\"(Элемент приложения)"));
-            _tests.Add(new Test(_testsClient, new RestRequest("/activities/?contextType=Workspace&contextKey=skiing", Method.GET), "4.5 Список активностей", "Проверка на отработку запроса \"/activities/?contextType=type&contextKey=key\" \n для типа \"Workspace\"(Рабочая область)"));
+            _tests.Add(new Test(_testsClient, new RestRequest("/activities/?contextType=Organization&contextKey=techrunning", Method.GET), "4.5.1 Список активностей организации", "Проверка на отработку запроса \"/activities/?contextType=type&contextKey=key\" \n для типа \"Organization\"(Организация)"));
+            _tests.Add(new Test(_testsClient, new RestRequest("/activities/251925360948376|ef4ebebe-1227-4bc3-95f9-992784934dc0/", Method.GET), "4.6 Контекст полученный по ключу", "Проверка на отработку запроса \"/activities/contextKey/\""));
+            _tests.Add(new Test(_testsClient, new RestRequest("/activities/userStream/", Method.GET), "5.1 Лента активности текущего пользователя", "Проверка на отработку запроса \"/activities/userStream/\""));
+            _tests.Add(new Test(_testsClient, new RestRequest("/users/2/", Method.GET), "5.2 Получение информации о пользователе", "Подогреть админчику)0)))))/n Проверка запроса /users/userKey/"));
+            _tests.Add(new Test(_testsClient, new RestRequest("/users/current/", Method.GET), "5.4 Получение информации о текущем пользователе", "Азаз, биссмюслица)0))))/nP.S. Запрос выполняется для отображения информации о текущем пользователе на форме"));
+            _tests.Add(new Test(_testsClient, new RestRequest("/discussions/", Method.GET), "5.6 Получение списка диалогов", "Проверка запроса \"/discussions/\""));
+            _tests.Add(new Test(_testsClient, new RestRequest("/discussions/20983229-35c8-4c15-8ee7-97fed3c529bf", Method.GET), "5.7 Получение сообщений диалога", "Проверка запроса \"/discussions/discussionTargetKey\""));
+            _tests.Add(new Test(_testsClient, new RestRequest("/contacts/", Method.GET), "6.1 Получение контактов пользователя", "Проверка запроса \"/contacts/\""));
+
 
             ListBoxItem item = new ListBoxItem();
             foreach (Test test in _tests)
