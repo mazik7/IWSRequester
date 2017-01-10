@@ -40,5 +40,6 @@
         <RadioButton x:Name="rBtnBiz" Content=".biz" HorizontalAlignment="Left" Margin="10,0,0,9" Cursor="Hand" IsChecked="True" Checked="rBtnBiz_Checked" Height="15" VerticalAlignment="Bottom"/>
         <RadioButton x:Name="rBtnCom" Content=".com" HorizontalAlignment="Left" Margin="52,0,0,10" Cursor="Hand" Checked="rBtnCom_Checked" Height="15" VerticalAlignment="Bottom"/>
         <Button x:Name="btnEditAuthData" Content="Edit auth data" HorizontalAlignment="Left" Margin="111,0,0,8" Width="78" Cursor="Hand" Click="btnEditAuthData_Click" Height="20" VerticalAlignment="Bottom"/>
+        <Label x:Name="lblCurrentUser" Content="" HorizontalAlignment="Left" Margin="512,354,0,0" VerticalAlignment="Top" Foreground="#FF295391"/>
     </Grid>
 </Window>

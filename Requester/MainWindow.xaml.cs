@@ -231,7 +231,7 @@ namespace Requester
             else
                 _config = new Config();
             TestInit();
-            lblEventStatus.Content = new CurrentUser(_config).UserName;
+            lblCurrentUser.Content = new CurrentUser(_config).UserName;
         }
 
         private void listBoxFiles_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -308,6 +308,7 @@ namespace Requester
             {
                 _config.IsBiz = true;
                 _testsClient.BaseUrl = new Uri(_config.BaseURL);
+                lblCurrentUser.Content = new CurrentUser(_config).UserName;
             }
         }
 
@@ -317,6 +318,7 @@ namespace Requester
             {
                 _config.IsBiz = false;
                 _testsClient.BaseUrl = new Uri(_config.BaseURL);
+                lblCurrentUser.Content = new CurrentUser(_config).UserName;
             }
         }
 
