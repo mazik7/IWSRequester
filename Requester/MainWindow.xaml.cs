@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using RestSharp;
@@ -41,12 +42,13 @@ namespace Requester
             _testsClient.BaseUrl = new Uri(_config.BaseURL);
             _tests.Add(new Test(_testsClient, new RestRequest("/app/?organizationKey=techrunning&workspaceKey=skiing", Method.GET), "1.1 Спискок приложений в рабочей области", "Проверка на отработку запроса \"/app/?organizationKey={organizationKey}&workspaceKey={workspaceKey}\", \nа так же проверка наличия тестовой рабочей области"));
             _tests.Add(new Test(_testsClient, new RestRequest("/app/trainings/", Method.GET), "1.2 Информация о приложении", "Проверка на отработку запроса \"/app/appKey/\", а так же проверка наличия тестового приложения"));
-            _tests.Add(new Test(_testsClient, new RestRequest("/app/trainings/fields/", Method.GET), "2.1 Список полей приложения", "Проверка на отработку запроса \"/app/appKey/fields/\""));
-            _tests.Add(new Test(_testsClient, new RestRequest("/app/trainings/items/", Method.GET), "3.1 Список элементов приложения", "Проверка на отработку запроса \"/app/appKey/items/\""));
-            _tests.Add(new Test(_testsClient, new RestRequest("/app/items/51761/", Method.GET), "3.1 Элемент приложения", "Проверка на отработку запроса \"/app/items/itemKey/\""));
+            _tests.Add(new Test(_testsClient, new RestRequest("/app/", Method.PUT), "1.3 Новое приложение", "Проверка на отработку запроса \"/app/appKey/\", а так же проверка наличия тестового приложения"));
+            _tests.Add(new Test(_testsClient, new RestRequest("/app/bugs/fields/", Method.GET), "2.1 Список полей приложения", "Проверка на отработку запроса \"/app/appKey/fields/\""));
+            _tests.Add(new Test(_testsClient, new RestRequest("/app/bugs/items/", Method.GET), "3.1 Список элементов приложения", "Проверка на отработку запроса \"/app/appKey/items/\""));
+            _tests.Add(new Test(_testsClient, new RestRequest("/app/items/54779/", Method.GET), "3.1 Элемент приложения", "Проверка на отработку запроса \"/app/items/itemKey/\""));
             _tests.Add(new Test(_testsClient, new RestRequest("/organizations/", Method.GET), "4.1 Список организаций", "Проверка на отработку запроса \"/organizations/\""));
             _tests.Add(new Test(_testsClient, new RestRequest("/workspaces/?organizationKey=techrunning", Method.GET), "4.2 Список рабочих областей в организации", "Проверка на отработку запроса \"/workspaces/?organizationKey=orgKey/\""));
-            _tests.Add(new Test(_testsClient, new RestRequest("/comments/?targetType=ApplicationPartRecord&targetKey=51761", Method.GET), "4.3.1 Комментарии элемента приложения", "Проверка на отработку запроса \"/comments/?targetType=type&targetKey=key\" \n для типа \"ApplicationPartRecord\"(Элемент приложения)"));
+            _tests.Add(new Test(_testsClient, new RestRequest("/comments/?targetType=ApplicationPartRecord&targetKey=54779", Method.GET), "4.3.1 Комментарии элемента приложения", "Проверка на отработку запроса \"/comments/?targetType=type&targetKey=key\" \n для типа \"ApplicationPartRecord\"(Элемент приложения)"));
             _tests.Add(new Test(_testsClient, new RestRequest("/comments/?targetType=StatusData&targetKey=251938924079240_1727685f-37c4-412e-9baa-25e489bf88d0", Method.GET), "4.3.2 Комментарии статуса", "Проверка на отработку запроса \"/comments/?targetType=type&targetKey=key\" \n для типа \"StatusData\"(Статус)"));
             _tests.Add(new Test(_testsClient, new RestRequest("/comments/?targetType=Organization&targetKey=techrunning", Method.GET), "4.3.3 Комментарии контекста организации", "Проверка на отработку запроса \"/comments/?targetType=type&targetKey=key\" \n для типа \"Organization\"(Организация)"));
             _tests.Add(new Test(_testsClient, new RestRequest("/comments/?targetType=UserOrganization&targetKey=23658|techrunning", Method.GET), "4.3.4 Комментарии контекста пользователя в организации", "Проверка на отработку запроса \"/comments/?targetType=type&targetKey=key\" \n для типа \"UserOrganization\"(Пользователь в организации)"));
@@ -377,7 +379,8 @@ namespace Requester
                         }
                     }
                 }
-                textBoxLog.AppendText("Запускаем несколько тестов. Придется долго ждать пока я не закончу. Вахахах" + "\n");
+                textBoxLog.Dispatcher.Invoke(new ThreadStart(delegate { textBoxLog.AppendText("Запускаем несколько тестов. Придется долго ждать пока я не закончу. Вахахах" + "\n"); }));
+                //textBoxLog.AppendText("Запускаем несколько тестов. Придется долго ждать пока я не закончу. Вахахах" + "\n");
                 TestSuite suite = new TestSuite(testsList);
                 testsResult = suite.Start(_config.Token);
                 textBoxLog.Text += "Информация о прошедших тестах..." + "\n";

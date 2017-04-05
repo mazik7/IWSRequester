@@ -63,6 +63,15 @@ namespace Requester
             _client = client;
             Status = State.Ready;
         }
+        public Test(RestClient client, RestRequest request, string name, string description, string body)
+        {
+            _request = request;
+            _name = name;
+            _description = description;
+            _client = client;
+            _request.AddParameter("application/json", body, ParameterType.RequestBody);
+            Status = State.Ready;
+        }
         public Result Start(string oauth_token)
         {
             if(Status == State.Pidor)
