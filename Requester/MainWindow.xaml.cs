@@ -98,8 +98,10 @@ namespace Requester
             _tests.Add(new Test(_testsClient, new RestRequest("/Comment/2519102251072752420/likeorunlike", Method.POST), "5.5.9 Отметка \"Лукас\"(Комментарий)", "Проверка на отработку запроса \"/targetType/targetKey/likeorunlike\" для типа Comment"));
             _tests.Add(new Test(_testsClient, new RestRequest("/discussions/", Method.GET), "5.6 Получение списка диалогов", "Проверка запроса \"/discussions/\""));
             _tests.Add(new Test(_testsClient, new RestRequest("/discussions/20983229-35c8-4c15-8ee7-97fed3c529bf", Method.GET), "5.7 Получение сообщений диалога", "Проверка запроса \"/discussions/discussionTargetKey\""));
+            _tests.Add(new Test(_testsClient, new RestRequest("/discussions/", Method.PUT), "5.8 Создание нового диалога", "Проверка на отработку PUT запроса  \"/discussions/\"", "{\"Body\": \"BodyBodyBody\",\"Subject\": \"SubjectSubject\",\"RecipientKeys\": [2]}"));
+            _tests.Add(new Test(_testsClient, new RestRequest("/discussions/20983229-35c8-4c15-8ee7-97fed3c529bf", Method.PUT), "5.9 Создание сообщения в диалоге", "Проверка PUT запроса \"/discussions/discussionTargetKey\"", "{\"Body\": \"HOTBODY\"}"));
+            _tests.Add(new Test(_testsClient, new RestRequest("/discussions/20983229-35c8-4c15-8ee7-97fed3c529bf/MarkAsViewed", Method.POST), "5.10 Пометка диалога прочитанным", "Проверка запроса \"/discussions/discussionTargetKey/MarkAsViewed\""));
             _tests.Add(new Test(_testsClient, new RestRequest("/contacts/", Method.GET), "6.1 Получение контактов пользователя", "Проверка запроса \"/contacts/\""));
-
 
             ListBoxItem item = new ListBoxItem();
             foreach (Test test in _tests)
