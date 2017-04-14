@@ -30,9 +30,11 @@
             </TabItem>
             <TabItem x:Name="testTabItem" Header="Tests">
                 <Grid Background="#FFE5E5E5">
-                    <ListBox x:Name="listBoxTests" Margin="0,0,0,36" MouseDoubleClick="listBoxTests_MouseDoubleClick" SelectionMode="Multiple" SelectionChanged="listBoxTests_SelectionChanged" HorizontalAlignment="Left" Width="360"/>
+                    <ListBox x:Name="listBoxTests" Margin="0,0,0,36" SelectionMode="Multiple" SelectionChanged="listBoxTests_SelectionChanged" HorizontalAlignment="Left" Width="360"/>
                     <TextBox x:Name="textBoxLog" Margin="365,0,0,36" TextWrapping="Wrap" HorizontalContentAlignment="Stretch" AcceptsReturn="True" IsManipulationEnabled="True" VerticalScrollBarVisibility="Visible"/>
                     <Button x:Name="buttonStart" Click="buttonStart_Click" Width="100" Height="20" Margin="10,0,0,10" Background="#FF9EB5DE" BorderBrush="{x:Null}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Content="Execute selected" Foreground="White" IsEnabled="False"/>
+                    <Button x:Name="buttonSelectAll" Click="buttonSelectAll_Click" Width="100" Height="20" Margin="127,0,0,10" Background="#FF9EB5DE" BorderBrush="{x:Null}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Content="Select All" Foreground="White"/>
+                    <Button x:Name="buttonClearLog" Click="buttonClearLog_Click" Height="20" Margin="0,0,21,10" Background="#FFDE9E9E" BorderBrush="{x:Null}" VerticalAlignment="Bottom" Content="Clear log" Foreground="White" HorizontalAlignment="Right" Width="75"/>
                 </Grid>
             </TabItem>
         </TabControl>
