@@ -377,7 +377,7 @@ namespace Requester
             }
         }
 
-        private void listBoxTests_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void StartSelected()
         {
             Collection<string> items = new Collection<string>();
             Collection<Test> testsList = new Collection<Test>();
@@ -398,11 +398,11 @@ namespace Requester
                 {
                     items.Add(item.Content.ToString());
                 }
-                foreach(string item in items)
+                foreach (string item in items)
                 {
-                    foreach(Test test in _tests)
+                    foreach (Test test in _tests)
                     {
-                        if(item.Contains(test.Name))
+                        if (item.Contains(test.Name))
                         {
                             testsList.Add(test);
                             break;
@@ -414,25 +414,43 @@ namespace Requester
                 TestSuite suite = new TestSuite(testsList);
                 testsResult = suite.Start(_config.Token);
                 textBoxLog.Text += "Информация о прошедших тестах..." + "\n";
-                textBoxLog.Text += "Всего тестов: "+ suite.TotalCount + "\n";
+                textBoxLog.Text += "Всего тестов: " + suite.TotalCount + "\n";
                 textBoxLog.Text += "Успешных: " + suite.PassedCount + "\n";
                 textBoxLog.Text += "Неудачников: " + suite.FailedCount + "\n";
-                if(testsResult!= null)
+                if (testsResult != null)
                 {
                     textBoxLog.Text += "О неудачниках: " + "\n";
-                    foreach(Result failedResult in testsResult)
+                    foreach (Result failedResult in testsResult)
                     {
                         textBoxLog.Text += "-----------------------------------------------\n";
                         textBoxLog.Text += "Запрос: " + failedResult.URL + "\n";
                         textBoxLog.Text += "Код ответа: " + failedResult.State + "\n";
                         textBoxLog.Text += "Подробней: " + failedResult.Description + "\n";
-                        if(failedResult.Body != "")
+                        if (failedResult.Body != "")
                             textBoxLog.Text += "Тело ответа: " + JsonHelper.FormatJson(failedResult.Body) + "\n";
                         else
                             textBoxLog.Text += "В теле ответа пришла пустота... \n";
                     }
                 }
             }
+        }
+
+        private void listBoxTests_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            StartSelected();
+        }
+
+        private void buttonStart_Click(object sender, RoutedEventArgs e)
+        {
+            StartSelected();
+        }
+
+        private void listBoxTests_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (listBoxTests.SelectedItems.Count <= 0)
+                buttonStart.IsEnabled = false;
+            else
+                buttonStart.IsEnabled = true;
         }
     }
 }

@@ -5,41 +5,40 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Requester"
         mc:Ignorable="d"
-        Title="IWSAPITester" Height="419" Width="923.601" Loaded="Window_Loaded" Closed="Window_Closed">
+        Title="IWSAPITester" Height="445.04" Width="923.601" Loaded="Window_Loaded" Closed="Window_Closed">
     <Grid>
-        <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="354" VerticalAlignment="Top" Width="904">
+        <TabControl x:Name="tabControl" Margin="0,0,12,34">
             <TabItem x:Name="requestTabItem" Header="Custom request">
                 <Grid Background="#FFE5E5E5" Margin="0,0,0,-1">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="11*"/>
-                        <ColumnDefinition Width="80*"/>
-                        <ColumnDefinition Width="807*"/>
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Button x:Name="btnLaunch" Content="Send " HorizontalAlignment="Right" Margin="0,289,10,0" VerticalAlignment="Top" Width="37" Click="btnLaunch_Click" HorizontalContentAlignment="Center" Grid.Column="2" Height="20" Background="#FFC8FFC8" AllowDrop="True"/>
-                    <TextBox x:Name="textBoxRequest" Height="23" Margin="10,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="497" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left" Grid.ColumnSpan="3"/>
-                    <TextBox x:Name="textBoxResponce" Height="237" Margin="76,47,386,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalContentAlignment="Stretch" AcceptsReturn="True" Grid.Column="2"/>
-                    <ListBox x:Name="listBoxMethod" Height="67" Margin="9,47,14,0" VerticalAlignment="Top" ScrollViewer.CanContentScroll="True" SelectionChanged="listBoxMethod_SelectionChanged" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" SelectedIndex="0" UseLayoutRounding="True" Grid.Column="1">
+                    <Button x:Name="btnLaunch" Content="Send " HorizontalAlignment="Right" Margin="0,0,21,19" Width="37" Click="btnLaunch_Click" HorizontalContentAlignment="Center" Background="#FFC8FFC8" AllowDrop="True" RenderTransformOrigin="0.689,2.225" BorderBrush="{x:Null}" Height="20" VerticalAlignment="Bottom"/>
+                    <TextBox x:Name="textBoxRequest" Height="23" Margin="10,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left" Width="497"/>
+                    <TextBox x:Name="textBoxResponce" Margin="167,47,0,69" TextWrapping="Wrap" HorizontalContentAlignment="Stretch" AcceptsReturn="True" HorizontalAlignment="Left" Width="340"/>
+                    <ListBox x:Name="listBoxMethod" Height="67" Margin="20,47,0,0" VerticalAlignment="Top" ScrollViewer.CanContentScroll="True" SelectionChanged="listBoxMethod_SelectionChanged" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" SelectedIndex="0" UseLayoutRounding="True" HorizontalAlignment="Left" Width="57">
                         <ListBoxItem Cursor="Hand" Content="GET"/>
                         <ListBoxItem Cursor="Hand" Content="POST"/>
                         <ListBoxItem Cursor="Hand" Content="PUT"/>
                     </ListBox>
-                    <TextBox x:Name="textBoxBody" Height="265" Margin="421,19,21,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalContentAlignment="Stretch" IsEnabled="False" AcceptsReturn="True" Grid.Column="2"/>
-                    <Button x:Name="btnOpenFile" Content="Open File" HorizontalAlignment="Left" Margin="71,49,0,0" VerticalAlignment="Top" Width="75" Click="btnOpenFile_Click" Height="20" Grid.ColumnSpan="2" Grid.Column="1"/>
-                    <Button x:Name="btnUploadFile" Content="Upload File" HorizontalAlignment="Left" Margin="71,83,0,0" VerticalAlignment="Top" Width="75" Click="btnUploadFile_Click" Height="20" Grid.ColumnSpan="2" Grid.Column="1"/>
-                    <ListBox x:Name="listBoxFiles" Height="165" Margin="9,119,741,0" VerticalAlignment="Top" MouseDoubleClick="listBoxFiles_MouseDoubleClick" KeyDown="listBoxFiles_KeyDown" Grid.ColumnSpan="2" Grid.Column="1"/>
-                    <Label x:Name="lblEventStatus" Content="" HorizontalAlignment="Left" Margin="9,289,0,0" VerticalAlignment="Top" Height="30" Width="794" Grid.ColumnSpan="2" Grid.Column="1"/>
+                    <TextBox x:Name="textBoxBody" Margin="512,19,21,69" TextWrapping="Wrap" HorizontalContentAlignment="Stretch" IsEnabled="False" AcceptsReturn="True"/>
+                    <Button x:Name="btnOpenFile" Content="Open File" HorizontalAlignment="Left" Margin="82,49,0,0" VerticalAlignment="Top" Width="75" Click="btnOpenFile_Click" Height="20"/>
+                    <Button x:Name="btnUploadFile" Content="Upload File" HorizontalAlignment="Left" Margin="82,83,0,0" VerticalAlignment="Top" Width="75" Click="btnUploadFile_Click" Height="20"/>
+                    <ListBox x:Name="listBoxFiles" Margin="20,119,0,69" MouseDoubleClick="listBoxFiles_MouseDoubleClick" KeyDown="listBoxFiles_KeyDown" HorizontalAlignment="Left" Width="137"/>
+                    <Label x:Name="lblEventStatus" Content="" HorizontalAlignment="Left" Margin="20,289,0,0" VerticalAlignment="Top" Height="30" Width="794"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="testTabItem" Header="Tests">
                 <Grid Background="#FFE5E5E5">
-                    <ListBox x:Name="listBoxTests" HorizontalAlignment="Right" Height="316" VerticalAlignment="Top" Width="269" Margin="0,0,629,0" MouseDoubleClick="listBoxTests_MouseDoubleClick" SelectionMode="Multiple"/>
-                    <TextBox x:Name="textBoxLog" Height="316" Margin="274,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="624" HorizontalContentAlignment="Stretch" HorizontalAlignment="Left" AcceptsReturn="True" IsManipulationEnabled="True" VerticalScrollBarVisibility="Visible"/>
+                    <ListBox x:Name="listBoxTests" Margin="0,0,0,36" MouseDoubleClick="listBoxTests_MouseDoubleClick" SelectionMode="Multiple" SelectionChanged="listBoxTests_SelectionChanged" HorizontalAlignment="Left" Width="360"/>
+                    <TextBox x:Name="textBoxLog" Margin="365,0,0,36" TextWrapping="Wrap" HorizontalContentAlignment="Stretch" AcceptsReturn="True" IsManipulationEnabled="True" VerticalScrollBarVisibility="Visible"/>
+                    <Button x:Name="buttonStart" Click="buttonStart_Click" Width="100" Height="20" Margin="10,0,0,10" Background="#FF9EB5DE" BorderBrush="{x:Null}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Content="Execute selected" Foreground="White" IsEnabled="False"/>
                 </Grid>
             </TabItem>
         </TabControl>
         <RadioButton x:Name="rBtnBiz" Content=".biz" HorizontalAlignment="Left" Margin="10,0,0,9" Cursor="Hand" IsChecked="True" Checked="rBtnBiz_Checked" Height="15" VerticalAlignment="Bottom"/>
         <RadioButton x:Name="rBtnCom" Content=".com" HorizontalAlignment="Left" Margin="52,0,0,10" Cursor="Hand" Checked="rBtnCom_Checked" Height="15" VerticalAlignment="Bottom"/>
-        <Button x:Name="btnEditAuthData" Content="Edit auth data" HorizontalAlignment="Left" Margin="111,0,0,8" Width="78" Cursor="Hand" Click="btnEditAuthData_Click" Height="20" VerticalAlignment="Bottom"/>
-        <Label x:Name="lblCurrentUser" Content="" HorizontalAlignment="Left" Margin="512,354,0,0" VerticalAlignment="Top" Foreground="#FF295391"/>
+        <Button x:Name="btnEditAuthData" Content="Edit auth data" Margin="111,0,0,8" Cursor="Hand" Click="btnEditAuthData_Click" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="102"/>
+        <Label x:Name="lblCurrentUser" Content="" Margin="230,0,0,8" Foreground="#FF295391" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="348" />
     </Grid>
 </Window>
