@@ -115,9 +115,9 @@ namespace Requester
                 IRestResponse responce;
                 responce = _client.Execute(_request);
                 if(responce.StatusCode==_expectedCode)
-                    return new Result(_name, responce.Request.Resource ,true, responce.StatusCode.ToString(), responce.Content.ToString(), responce.StatusDescription.ToString());
+                    return new Result(_name, responce.Request.Resource ,true, responce.StatusCode.ToString(), responce.Content, responce.StatusDescription);
                 else
-                    return new Result(_name, responce.Request.Resource, false, responce.StatusCode.ToString(), responce.Content.ToString(), responce.StatusDescription.ToString());
+                    return new Result(_name, responce.Request.Resource, false, responce.StatusCode.ToString(), responce.Content, responce.StatusDescription);
             }
         }
 
