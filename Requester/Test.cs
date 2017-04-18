@@ -95,5 +95,28 @@ namespace Requester
                     return new Result(responce.Request.Resource, false, responce.StatusCode.ToString(), responce.Content.ToString(), responce.StatusDescription.ToString());
             }
         }
+        public Result Start(string oauth_token, System.Net.HttpStatusCode expectedCode)
+        {
+            if (Status == State.Pidor)
+                return new Result(null, false, null, null, null);
+            else
+            {
+                foreach (Parameter parameter in _request.Parameters)
+                {
+                    if (parameter.Name.Contains("oauth_token"))
+                    {
+                        _request.Parameters.Remove(parameter);
+                        break;
+                    }
+                }
+                _request.AddHeader("oauth_token", oauth_token);
+                IRestResponse responce;
+                responce = _client.Execute(_request);
+                if (responce.StatusCode == expectedCode)
+                    return new Result(responce.Request.Resource, true, responce.StatusCode.ToString(), responce.Content.ToString(), responce.StatusDescription.ToString());
+                else
+                    return new Result(responce.Request.Resource, false, responce.StatusCode.ToString(), responce.Content.ToString(), responce.StatusDescription.ToString());
+            }
+        }
     }
 }
