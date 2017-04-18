@@ -547,7 +547,8 @@ namespace Requester
                     textBoxLog.Text += "О неудачниках: " + "\n";
                     foreach (Result failedResult in testsResult)
                     {
-                        textBoxLog.Text += "-----------------------------------------------\n";
+                        textBoxLog.Text += "----------------------------------------------------------------------------------------\n";
+                        textBoxLog.Text += "Запрос: " + failedResult.TestName + "\n";
                         textBoxLog.Text += "Запрос: " + failedResult.URL + "\n";
                         textBoxLog.Text += "Код ответа: " + failedResult.State + "\n";
                         textBoxLog.Text += "Подробней: " + failedResult.Description + "\n";

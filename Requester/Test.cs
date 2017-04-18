@@ -100,7 +100,7 @@ namespace Requester
         public Result Start(string oauth_token)
         {
             if(Status == State.Pidor)
-                return new Result(null, false, null, null, null);
+                return new Result(null, null, false, null, null, null);
             else
             {
                 foreach (Parameter parameter in _request.Parameters)
@@ -115,9 +115,9 @@ namespace Requester
                 IRestResponse responce;
                 responce = _client.Execute(_request);
                 if(responce.StatusCode==_expectedCode)
-                    return new Result(responce.Request.Resource ,true, responce.StatusCode.ToString(), responce.Content.ToString(), responce.StatusDescription.ToString());
+                    return new Result(_name, responce.Request.Resource ,true, responce.StatusCode.ToString(), responce.Content.ToString(), responce.StatusDescription.ToString());
                 else
-                    return new Result(responce.Request.Resource, false, responce.StatusCode.ToString(), responce.Content.ToString(), responce.StatusDescription.ToString());
+                    return new Result(_name, responce.Request.Resource, false, responce.StatusCode.ToString(), responce.Content.ToString(), responce.StatusDescription.ToString());
             }
         }
 
