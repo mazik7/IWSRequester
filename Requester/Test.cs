@@ -87,6 +87,15 @@ namespace Requester
             _expectedCode = HttpStatusCode.OK;
             Status = State.Ready;
         }
+        public Test(RestClient client, RestRequest request, string name, string description, System.Net.HttpStatusCode expectedCode)
+        {
+            _request = request;
+            _name = name;
+            _description = description;
+            _client = client;
+            _expectedCode = expectedCode;
+            Status = State.Ready;
+        }
         public Test(RestClient client, RestRequest request, string name, string description, string body, System.Net.HttpStatusCode expectedCode)
         {
             _request = request;
