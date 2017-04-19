@@ -557,6 +557,24 @@ namespace Requester
                         else
                             textBoxLog.Text += "В теле ответа пришла пустота... \n";
                     }
+                    bool flag = false;
+                    foreach (ListBoxItem item in listBoxTests.Items)
+                    {
+                        flag = false;
+                        foreach (Result failedResult in testsResult)
+                        {
+                            if (failedResult.TestName == (string)item.Content)
+                            {
+                                flag = true;
+                                item.Foreground = Brushes.Red;
+                                break;
+                            }
+                        }
+                        if (flag)
+                            item.Foreground = Brushes.Red;
+                        else
+                            item.Foreground = Brushes.Green;
+                    }
                 }
             }
         }
@@ -576,6 +594,10 @@ namespace Requester
                         textBoxLog.Text += "Тело ответа: " + JsonHelper.FormatJson(testResult.Body) + "\n";
                     else
                         textBoxLog.Text += "В теле ответа пришла пустота... \n";
+                    if (testResult.Passed)
+                        item.Foreground = Brushes.Green;
+                    else
+                        item.Foreground = Brushes.Red;
                     break;
                 }
             }
