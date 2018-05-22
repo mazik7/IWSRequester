@@ -13,7 +13,7 @@ namespace Requester
         Ready = 0,
         Started = 1,
         Ended = 2,
-        Pidor = 5
+        Faggot = 5
 
     }
     public class Test
@@ -108,7 +108,7 @@ namespace Requester
         }
         public Result Start(string oauth_token)
         {
-            if(Status == State.Pidor)
+            if(Status == State.Faggot)
                 return new Result(null, null, false, null, null, null);
             else
             {
